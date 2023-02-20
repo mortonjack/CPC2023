@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <set>
+#include <unordered_set>
 using namespace std;
 
 /* 
@@ -10,7 +10,7 @@ using namespace std;
  * If we get to node B, we don't check, we backtrack
  */
 
-bool dfs(vector<vector<pair<int, int>>>& adj, set<int>& reachable, int node, int b, bool a, int x, int parent) {
+bool dfs(vector<vector<pair<int, int>>>& adj, unordered_set<int>& reachable, int node, int b, bool a, int x, int parent) {
     // Insert x into set OR look for x in set
     if (a) {
         if (reachable.find(x) != reachable.end()) return true;
@@ -30,7 +30,7 @@ bool dfs(vector<vector<pair<int, int>>>& adj, set<int>& reachable, int node, int
 }
 
 bool canReach(vector<vector<pair<int, int>>>& adj, int a, int b) {
-    set<int> reachable;
+    unordered_set<int> reachable;
     dfs(adj, reachable, b, b, false, 0, -1);
     return dfs(adj, reachable, a, b, true, 0, -1);
 }
