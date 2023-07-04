@@ -1,8 +1,9 @@
 #include <iostream>
 using namespace std;
 
-int trips(int n, int min_days, int max_temp) {
-  int temp, total = 0, curr_len = 0;
+long long trips(int n, int min_days, int max_temp) {
+  int temp, curr_len = 0;
+  long long total = 0;
   for (int i = 0; i < n; i++) {
     cin >> temp;
     if (temp <= max_temp) curr_len++;
