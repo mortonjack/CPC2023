@@ -47,59 +47,58 @@ class Pos {
     int col;
     Pos(int t, int r, int c): time(t), row(r), col(c) {}
     
-    bool operator>(const Pos& other) const {
-        if (time != other.time) return time < other.time;
-        return row+col < other.row+other.col;
-    }
     bool operator<(const Pos& other) const {
-        if (time != other.time) return time > other.time;
-        return row+col > other.row+other.col;
+        return time-row-col < other.time-other.row-other.col;
+    }
+    bool operator>(const Pos& other) const {
+        return time-row-col > other.time-other.row-other.col;
     }
     bool operator==(const Pos& other) const {
         return time == other.time && row == other.row && col == other.col;
     }
-    bool operator>=(const Pos& other) const {
-        if (time != other.time) return time <= other.time;
-        return row+col <= other.row+other.col;
-    }
     bool operator<=(const Pos& other) const {
-        if (time != other.time) return time >= other.time;
-        return row+col >= other.row+other.col;
+        return time-row-col <= other.time-other.row-other.col;
+    }
+    bool operator>=(const Pos& other) const {
+        return time-row-col >= other.time-other.row-other.col;
     }
 };
 
 int play(int n, int m, Shots& shots) {
   Cache cache;
-  priority_queue<Pos> q;
+  priority_queue<Pos, vector<Pos>, greater<Pos>> q;
   q.emplace(0, 0, 0);
   while (!q.empty()) {
     Pos pos = q.top(); q.pop();
     if (pos.row == n && pos.col == m) return pos.time;
 
-    if (!shots.is_shot(pos.time+1, pos.row, pos.col) 
-    && cache.unexplored(pos.time+1, pos.row, pos.col)) {
-      q.emplace(pos.time+1, pos.row, pos.col);
+    int time = pos.time+1, row = pos.row, col = pos.col;
+    cout << time << ": [" << row << ',' << col << "]\n";
+
+    if (!shots.is_shot(time, row, col) 
+    && cache.unexplored(time, row, col)) {
+      q.emplace(time, row, col);
     }
 
-    if (pos.row != n 
-    && !shots.is_shot(pos.time+1, pos.row+1, pos.col) 
-    && cache.unexplored(pos.time+1, pos.row+1, pos.col)) {
-      q.emplace(pos.time+1, pos.row+1, pos.col);
+    if (row != n 
+    && !shots.is_shot(time, row+1, col) 
+    && cache.unexplored(time, row+1, col)) {
+      q.emplace(time, row+1, col);
     }
-    if (pos.row != 0
-    && !shots.is_shot(pos.time+1, pos.row-1, pos.col) 
-    && cache.unexplored(pos.time+1, pos.row-1, pos.col)) {
-      q.emplace(pos.time+1, pos.row-1, pos.col);
+    if (row != 0
+    && !shots.is_shot(time, row-1, col) 
+    && cache.unexplored(time, row-1, col)) {
+      q.emplace(time, row-1, col);
     }
-    if (pos.col != m 
-    && !shots.is_shot(pos.time+1, pos.row, pos.col+1) 
-    && cache.unexplored(pos.time+1, pos.row, pos.col+1)) {
-      q.emplace(pos.time+1, pos.row, pos.col+1);
+    if (col != m 
+    && !shots.is_shot(time, row, col+1) 
+    && cache.unexplored(time, row, col+1)) {
+      q.emplace(time, row, col+1);
     }
-    if (pos.col != 0 
-    && !shots.is_shot(pos.time+1, pos.row, pos.col-1) 
-    && cache.unexplored(pos.time+1, pos.row, pos.col-1)) {
-      q.emplace(pos.time+1, pos.row, pos.col-1);
+    if (col != 0 
+    && !shots.is_shot(time, row, col-1) 
+    && cache.unexplored(time, row, col-1)) {
+      q.emplace(time, row, col-1);
     }
   }
   return -1;
