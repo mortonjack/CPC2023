@@ -34,15 +34,12 @@ int main() {
         }
         x = y;
       }
-      int* ptr = new int;
-      delete ptr; delete ptr; // SEGFAULT
       cout << "! " << cycle << endl;
       return 0;
     } else {
       num_offsets[x] = offset;
     }
   }
-  while (true) {} // TLE
   // Output max number seen (no cycle found, take a guess)
   cout << "! " << max_num << endl;
   return 0;
