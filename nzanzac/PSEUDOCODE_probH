@@ -1,0 +1,54 @@
+
+
+const green_length, red_length
+int queue_length, time // start
+int total_cars = 0
+
+queue
+add entry to queue: # queue_length, time 0
+
+int most_cars = queue_length
+int most_seconds = time_elapsed
+
+int s
+loop s times
+    phase = input(r/g)
+    num = input(number)
+    front_entry = queue.peek
+    green light
+        total_cars += num
+        queue_length -= num
+        most_seconds = max(most_seconds, time-top_entry.time)
+        while (total_cars >= top_entry.cars) 
+            most_seconds = max(most_seconds, time-top_entry.time)
+            queue.pop
+            break if queue is empty
+            front_entry = queue.peek
+        time += green_length
+    red light
+        queue.push{total_cars+queue_length+num, time}
+        queue_length += num
+        most_cars = max(most_cars, queue_length)
+        time += red_length
+        
+
+// PRINT
+"Longest queue was n vehicles"
+
+testinG:
+greeN_length = 20
+red_length = 100
+
+queue_length = 5
+time = 220
+total_cars = 4
+
+most_cars = 8
+most_seconds = 220
+
+queue: {12, 120}
+
+phase: G
+num: 3
+
+
